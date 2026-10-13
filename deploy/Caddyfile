@@ -1,0 +1,24 @@
+(love_static) {
+	root * /srv/love/current
+	encode zstd gzip
+	header {
+		Cache-Control "no-cache"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		X-Robots-Tag "noindex, nofollow, noarchive"
+	}
+	file_server
+}
+
+artkompaneets.ru {
+	import love_static
+}
+
+www.artkompaneets.ru {
+	redir https://artkompaneets.ru{uri} permanent
+}
+
+# Also serves as a local health check endpoint during deployment.
+http://77.221.154.156 {
+	import love_static
+}

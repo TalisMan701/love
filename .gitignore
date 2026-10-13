@@ -1,0 +1,22 @@
+# Local editor and agent state
+.agents/
+.codex/
+.impeccable/
+.npmrc
+
+# Credentials and local deployment state
+.deploy-private/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Dependencies and generated previews (dist is the site's source)
+node_modules/
+letter-for-you/alina.html
+letter-for-you/previews/
+
+# OS files
+.DS_Store
+Thumbs.db

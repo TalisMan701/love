@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f4ee">
+  <meta name="description" content="Любимая, эта маленькая история — только для тебя. Шесть лет вместе и ещё столько всего впереди.">
+  <title>Любимой, с любовью · 6 лет вместе</title>
+  <!-- Critical loading styles stay inline so the first view needs no assets. -->
+  <style id="preloader-styles">
+    html.is-loading, .is-loading body { overflow: hidden; }
+    .is-loading .page-shell { visibility: hidden; }
+    .is-loading .screen { animation-play-state: paused; }
+    .preloader {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: grid;
+      place-content: center;
+      justify-items: center;
+      box-sizing: border-box;
+      padding: 32px 24px;
+      background: #f7f4ee;
+      color: #782f40;
+      text-align: center;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity .3s ease, visibility 0s .3s;
+    }
+    .is-loading .preloader {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transition: none;
+    }
+    .preloader-heart {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 26px;
+      overflow: visible;
+      animation: preloader-heartbeat 1.8s ease-in-out infinite paused;
+    }
+    .preloader-title {
+      max-width: 16ch;
+      margin: 0;
+      font: 600 clamp(27px, 5vw, 36px)/1.3 'Lora', Georgia, serif;
+      text-wrap: balance;
+    }
+    .preloader-title span { white-space: nowrap; }
+    .preloader-caption {
+      max-width: 26ch;
+      margin: 16px 0 0;
+      color: #685a55;
+      font: 700 15px/1.6 'Nunito', 'Trebuchet MS', sans-serif;
+      text-wrap: balance;
+    }
+    .preloader-dots { display: flex; gap: 8px; margin-top: 30px; }
+    .preloader-dots i {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #782f40;
+      animation: preloader-dot 1.8s ease-in-out infinite paused;
+    }
+    .preloader-dots i:nth-child(2) { animation-delay: .2s; }
+    .preloader-dots i:nth-child(3) { animation-delay: .4s; }
+    .is-loading .preloader-heart,
+    .is-loading .preloader-dots i { animation-play-state: running; }
+    .preloader.is-paused .preloader-heart,
+    .preloader.is-paused .preloader-dots i { animation-play-state: paused; }
+    @keyframes preloader-heartbeat {
+      0%, 100% { transform: scale(.96); }
+      45% { transform: scale(1.06); }
+    }
+    @keyframes preloader-dot {
+      0%, 100% { opacity: .25; }
+      50% { opacity: 1; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .preloader { transition-duration: .15s, 0s; transition-delay: 0s, .15s; }
+      .preloader-heart, .preloader-dots i { animation: none; }
+    }
+    @media print { .preloader { display: none; } }
+  </style>
+  <script id="preloader-bootstrap">
+    (() => {
+      const root = document.documentElement;
+      const controller = new AbortController();
+      root.classList.add('is-loading');
+      function finish() {
+        if (!root.classList.contains('is-loading')) return;
+        clearTimeout(deadline);
+        root.classList.remove('is-loading');
+        controller.abort();
+        document.dispatchEvent(new Event('gift:ready'));
+      }
+      // Independent of the app: a failed asset must never trap the visitor.
+      const deadline = setTimeout(finish, 8000);
+      window.GIFT_LOADER = { finish, signal: controller.signal };
+    })();
+  </script>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;1,500;1,600&family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet" media="print" data-preload-style onload="this.media='all'" onerror="this.dataset.failed='true'">
+  <link rel="stylesheet" href="./styles.css" media="print" data-preload-style onload="this.media='all'" onerror="this.dataset.failed='true'">
+  <noscript><link rel="stylesheet" href="./styles.css"></noscript>
+  <script defer src="./config.js"></script>
+  <script defer src="./app.js"></script>
+  <script defer src="./preload.js"></script>
+</head>
+<body>
+  <div class="preloader" id="preloader" role="status" aria-live="polite" aria-atomic="true">
+    <svg class="preloader-heart" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 21c-.5 0-1-.2-1.4-.5C6.2 17.3 2 13.8 2 8.7 2 5.5 4.3 3 7.5 3c1.8 0 3.5.9 4.5 2.3C13 3.9 14.7 3 16.5 3 19.7 3 22 5.5 22 8.7c0 5.1-4.2 8.6-8.6 11.8-.4.3-.9.5-1.4.5Z"/></svg>
+    <p class="preloader-title"><span>Готовлю кое-что</span><br>особенное</p>
+    <p class="preloader-caption">Ещё мгновение —<br>и эта история станет твоей.</p>
+    <span class="preloader-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+  </div>
+  <audio id="background-music" src="./media/gymnopedie-no-1.mp3" preload="auto" loop playsinline hidden></audio>
+  <svg class="svg-definitions" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="heart" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M12 21c-.5 0-1-.2-1.4-.5C6.2 17.3 2 13.8 2 8.7 2 5.5 4.3 3 7.5 3c1.8 0 3.5.9 4.5 2.3C13 3.9 14.7 3 16.5 3 19.7 3 22 5.5 22 8.7c0 5.1-4.2 8.6-8.6 11.8-.4.3-.9.5-1.4.5Z"/></symbol>
+    <symbol id="arrow" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" d="M4 12h15M13 6l6 6-6 6"/></symbol>
+    <symbol id="spark" viewBox="0 0 32 32"><path fill="currentColor" stroke="none" d="M14.3 3.7c.5-1.7 2.9-1.7 3.4 0l1.6 5.1a7.2 7.2 0 0 0 3.9 3.9l5.1 1.6c1.7.5 1.7 2.9 0 3.4l-5.1 1.6a7.2 7.2 0 0 0-3.9 3.9l-1.6 5.1c-.5 1.7-2.9 1.7-3.4 0l-1.6-5.1a7.2 7.2 0 0 0-3.9-3.9l-5.1-1.6c-1.7-.5-1.7-2.9 0-3.4l5.1-1.6a7.2 7.2 0 0 0 3.9-3.9Z"/></symbol>
+    <symbol id="flower" viewBox="0 0 32 32"><path fill="currentColor" stroke="none" fill-rule="evenodd" d="M16 6C12-2 3 4 7 11c-9-1-9 10 0 10-4 8 5 13 9 5 4 8 13 3 9-5 9 0 9-11 0-10 4-7-5-13-9-5ZM19.4 16a3.4 3.4 0 1 1-6.8 0 3.4 3.4 0 0 1 6.8 0Z"/></symbol>
+    <symbol id="sun" viewBox="0 0 32 32"><circle cx="16" cy="16" r="6.5" fill="currentColor" stroke="none"/><path d="M16 2v3m0 22v3M2 16h3m22 0h3M6.1 6.1l2.2 2.2m15.4 15.4 2.2 2.2m0-19.8-2.2 2.2M8.3 23.7l-2.2 2.2" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></symbol>
+    <symbol id="hearts" viewBox="0 0 32 32"><use href="#heart" x="0" y="0" width="24" height="24" opacity=".35"/><use href="#heart" x="8" y="8" width="24" height="24"/></symbol>
+    <symbol id="infinity" viewBox="0 0 32 32"><path d="M16 16C12.8 11.8 10.8 8.8 7.6 8.8 4.6 8.8 2.8 11.7 2.8 16s1.8 7.2 4.8 7.2c3.2 0 5.2-3 8.4-7.2s5.2-7.2 8.4-7.2c3 0 4.8 2.9 4.8 7.2s-1.8 7.2-4.8 7.2c-3.2 0-5.2-3-8.4-7.2Z" fill="none" stroke="currentColor" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="replay" viewBox="0 0 24 24"><path d="M5 9a8 8 0 1 1-.5 7M4 4v6h6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="external" viewBox="0 0 24 24"><path d="M6 18 18 6M7 6h11v11" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="2.3"/><path d="M15 4H7a3 3 0 0 0-3 3v8" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/></symbol>
+  </svg>
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="wordmark" href="./index.html" aria-label="Вернуться к началу">
+        <svg aria-hidden="true"><use href="#flower"/></svg>
+        <span>тебе, с любовью<span class="wordmark-dot">.</span></span>
+      </a>
+      <div class="anniversary"><svg class="tiny-heart" aria-hidden="true"><use href="#heart"/></svg><span>6 лет вместе</span><span class="anniversary-line"></span><span>и это только начало</span></div>
+      <button class="sound-toggle" id="sound-toggle" type="button" aria-label="Выключить музыку" aria-pressed="true" data-playing="false" title="Выключить музыку">
+        <span class="sound-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span id="sound-label">звук вкл.</span>
+      </button>
+    </header>
+
+    <main id="main-content">
+      <section class="screen intro-screen" id="screen-intro" aria-labelledby="intro-title">
+        <div class="intro-copy">
+          <p class="eyebrow"><span></span>ЛЮБИМАЯ, ЭТО ТОЛЬКО ДЛЯ ТЕБЯ</p>
+          <h1 id="intro-title" tabindex="-1">Шесть лет.<br>И всё ещё<br><em>бабочки.</em><svg class="title-spark" aria-hidden="true"><use href="#flower"/></svg></h1>
+          <p class="intro-description">Есть вещи, которые не меняются.<br>Например, как сильно я рад, что у меня есть ты.</p>
+          <button type="button" class="button button-primary" id="start-button">У меня кое-что для тебя<svg aria-hidden="true"><use href="#arrow"/></svg></button>
+          <p class="micro-copy"><svg aria-hidden="true"><use href="#heart"/></svg>Маленькая история. Большое чувство.</p>
+        </div>
+        <div class="envelope-scene" id="envelope-scene">
+          <div class="scene-orbit orbit-one" aria-hidden="true"></div>
+          <div class="scene-orbit orbit-two" aria-hidden="true"></div>
+          <span class="floating-type" aria-hidden="true">a little love letter</span>
+          <svg class="scene-spark spark-one" aria-hidden="true"><use href="#spark"/></svg>
+          <svg class="scene-spark spark-two" aria-hidden="true"><use href="#spark"/></svg>
+          <svg class="scene-plus" aria-hidden="true"><use href="#spark"/></svg>
+          <div class="postmark" aria-hidden="true"><span>ОСОБЕННАЯ ДОСТАВКА</span><strong>06</strong><span>ЛЕТ · ВМЕСТЕ</span></div>
+          <button type="button" class="envelope-button" id="envelope-button" aria-label="Открыть письмо для любимой">
+            <span class="envelope-back"></span>
+            <span class="letter-paper"><span class="paper-small">ОДНОЙ ОСОБЕННОЙ ДЕВУШКЕ</span><span class="paper-title">Дорогая,<br><em>ты — моё<br>самое тёплое<br>«навсегда».</em></span><svg class="paper-heart" aria-hidden="true"><use href="#heart"/></svg><span class="paper-sign">с любовью, всегда</span></span>
+            <span class="envelope-front"></span>
+            <span class="envelope-edge"></span>
+            <span class="envelope-addressee">Моей любимой</span>
+            <span class="wax-seal"><svg aria-hidden="true"><use href="#heart"/></svg></span>
+          </button>
+          <div class="handwritten-note" aria-hidden="true">внутри кое-что особенное<svg viewBox="0 0 80 60"><path d="M76 7C47 2 24 16 27 45m-13-8 13 11 12-14"/></svg></div>
+          <span class="scene-bottom-note">СОЗДАНО С ЛЮБОВЬЮ · В ЕДИНСТВЕННОМ ЭКЗЕМПЛЯРЕ</span>
+        </div>
+      </section>
+
+      <section class="screen notes-screen" id="screen-notes" aria-labelledby="notes-title" hidden>
+        <div class="section-heading">
+          <p class="eyebrow"><span></span>ШЕСТЬ ЛЕТ. МИЛЛИОН ПРИЧИН.</p>
+          <h2 id="notes-title" tabindex="-1">С тобой даже обычное — <em>особенное.</em></h2>
+          <p>Шесть маленьких признаний. Открой каждое — оно для тебя.</p>
+        </div>
+        <div class="notes-grid" id="notes-grid"></div>
+        <div class="notes-actions">
+          <p class="notes-progress" id="notes-progress" role="status" aria-live="polite">Открыто <strong>0 из 6</strong> признаний</p>
+          <button class="button button-primary" id="to-gift-button" type="button" disabled>А теперь — твой сюрприз<svg aria-hidden="true"><use href="#arrow"/></svg></button>
+        </div>
+      </section>
+
+      <section class="screen seal-screen" id="screen-seal" aria-labelledby="seal-title" hidden>
+        <div class="section-heading">
+          <p class="eyebrow"><span></span>ПОСЛЕДНЕЕ МАЛЕНЬКОЕ ВОЛШЕБСТВО</p>
+          <h2 id="seal-title" tabindex="-1">Ты заслуживаешь<br><em>чего-то прекрасного.</em></h2>
+          <p>И я очень хочу тебя порадовать.</p>
+        </div>
+        <div class="seal-interaction">
+          <div class="seal-decoration" aria-hidden="true">
+            <span class="seal-orbit"></span>
+            <svg class="seal-spark"><use href="#spark"/></svg>
+          </div>
+          <button type="button" class="reveal-seal" id="reveal-seal" aria-label="Нажми на сердечко, чтобы открыть подарок">
+            <svg class="hold-progress" viewBox="0 0 180 180" aria-hidden="true"><circle cx="90" cy="90" r="84"/></svg>
+            <span class="reveal-heart"><svg aria-hidden="true"><use href="#heart"/></svg></span>
+          </button>
+          <span class="seal-caption">с любовью к тебе</span>
+        </div>
+        <p class="hold-hint" id="hold-hint" role="status">Нажми на сердечко — и случится маленькое чудо.</p>
+      </section>
+
+      <section class="screen gift-screen" id="screen-gift" aria-labelledby="gift-title" hidden>
+        <div class="gift-copy">
+          <p class="eyebrow"><span></span>С НАШЕЙ ГОДОВЩИНОЙ, ЛЮБИМАЯ</p>
+          <h2 id="gift-title" tabindex="-1">Тебе так идёт<br><em>быть счастливой.</em></h2>
+          <p class="gift-description">Пусть это будет что-то, в чём ты почувствуешь себя ещё прекраснее. То самое платье. Новая пара. Или что-то, чего я пока даже не представляю.</p>
+          <p class="gift-letter">Выбирай сердцем.<br>А я уже выбрал — тебя.</p>
+          <section class="certificate-details" id="certificate-details" aria-label="Данные сертификата" hidden>
+            <dl class="certificate-fields">
+              <div class="certificate-field">
+                <dt>Код сертификата</dt>
+                <dd><span class="certificate-value" id="certificate-code"></span><button class="copy-button" type="button" data-copy-certificate="code" aria-label="Скопировать код сертификата" title="Скопировать код сертификата"><svg aria-hidden="true"><use href="#copy"/></svg></button></dd>
+              </div>
+              <div class="certificate-field">
+                <dt>PIN-код</dt>
+                <dd><span class="certificate-value" id="certificate-pin"></span><button class="copy-button" type="button" data-copy-certificate="pin" aria-label="Скопировать PIN-код" title="Скопировать PIN-код"><svg aria-hidden="true"><use href="#copy"/></svg></button></dd>
+              </div>
+            </dl>
+            <p class="certificate-status" id="certificate-status" role="status" aria-live="polite" aria-atomic="true"></p>
+            <div class="gift-links"><a class="button button-primary" id="certificate-activate" target="_blank" rel="noopener noreferrer" hidden>Активировать на Lamoda<svg aria-hidden="true"><use href="#external"/></svg></a></div>
+          </section>
+          <button class="text-button" type="button" id="replay-button">Прожить эту историю ещё раз <svg aria-hidden="true"><use href="#replay"/></svg></button>
+        </div>
+        <div class="gift-art">
+          <svg class="gift-star" aria-hidden="true"><use href="#spark"/></svg>
+          <article class="gift-card" aria-label="Подарочный сертификат Lamoda на 10 000 рублей для любимой">
+            <div class="gift-card-top"><span class="lamoda-logo">lamoda</span><span class="gift-card-kind">ПОДАРОЧНЫЙ<br>СЕРТИФИКАТ</span></div>
+            <p class="gift-card-for">Тебе, с любовью</p>
+            <p class="gift-card-amount"><span class="gift-amount-value" id="certificate-amount">10 000</span> <span class="gift-currency">₽</span></p>
+            <div class="gift-card-divider"><span></span><svg aria-hidden="true"><use href="#heart"/></svg><span></span></div>
+            <p class="gift-card-message">На то самое «хочу».</p>
+            <div class="gift-card-bottom"><span>6 ЛЕТ ВМЕСТЕ</span><span>ЕЩЁ БОЛЬШЕ ВПЕРЕДИ <svg aria-hidden="true"><use href="#external"/></svg></span></div>
+          </article>
+          <div class="gift-shadow-card" aria-hidden="true"></div>
+          <p class="gift-art-note">ещё один повод улыбнуться <svg aria-hidden="true"><use href="#heart"/></svg></p>
+        </div>
+        <div class="confetti" id="confetti" aria-hidden="true"></div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <nav class="journey" aria-label="Твоя маленькая история"><ol>
+        <li class="is-current" data-step="0" aria-current="step"><span class="step-number">01</span><span>Письмо тебе</span></li>
+        <li data-step="1"><span class="step-number">02</span><span>О нас</span></li>
+        <li data-step="2"><span class="step-number">03</span><span>Твой сюрприз</span><svg class="journey-heart" aria-hidden="true"><use href="#heart"/></svg></li>
+      </ol></nav>
+      <p class="footer-sign">Некоторые подарки начинаются с чувств<svg aria-hidden="true"><use href="#heart"/></svg></p>
+    </footer>
+  </div>
+  <noscript><p class="noscript-note">Чтобы открыть интерактивное письмо, включи JavaScript в браузере. Любимая, с годовщиной! Твой подарок — сертификат Lamoda на 10 000 ₽.</p></noscript>
+</body>
+</html>
