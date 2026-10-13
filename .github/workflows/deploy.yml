@@ -50,6 +50,8 @@ jobs:
         env:
           RELEASE_ID: ${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
         run: |
-          actual=$(curl --fail --silent --show-error --retry 5 --retry-delay 5 --max-time 20 https://artkompaneets.ru/release.txt)
+          # Initial DNS propagation and certificate issuance can briefly fail resolution/TLS.
+          curl_options=(--fail --silent --show-error --retry-all-errors --retry 30 --retry-delay 10 --retry-max-time 300 --max-time 20)
+          actual=$(curl "${curl_options[@]}" https://artkompaneets.ru/release.txt)
           test "$actual" = "$RELEASE_ID"
-          curl --fail --silent --show-error --max-time 20 https://artkompaneets.ru/ -o /dev/null
+          curl "${curl_options[@]}" https://artkompaneets.ru/ -o /dev/null
