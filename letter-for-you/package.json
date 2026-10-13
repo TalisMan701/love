@@ -5,6 +5,6 @@
   "type": "module",
   "scripts": {
     "start": "node preview.mjs",
-    "check": "node --check dist/app.js && node --check dist/config.js && node --check dist/preload.js && node --check preview.mjs && node --check build-preview.mjs"
+    "check": "node --check dist/app.js && node --check dist/config.js && node --check dist/preload.js && node --check preview.mjs && node --check build-preview.mjs && node --check ../deploy/build-site.mjs"
   }
 }

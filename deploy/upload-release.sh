@@ -4,6 +4,8 @@ set -Eeuo pipefail
 cd "$(dirname "$0")/.."
 : "${DEPLOY_SSH_KEY:?Add the DEPLOY_SSH_KEY repository secret in GitHub Actions}"
 : "${RELEASE_ID:?Set RELEASE_ID to a unique release name}"
+: "${PUBLISH_DIRECTORY:?Prepare the site with node deploy/build-site.mjs first}"
+[[ -s "$PUBLISH_DIRECTORY/index.html" ]] || { echo 'Prepared site is missing index.html' >&2; exit 1; }
 [[ "$RELEASE_ID" =~ ^[a-f0-9]{40}-[0-9]+-[0-9]+$ ]] || {
   echo 'Invalid release ID' >&2
   exit 1
@@ -33,6 +35,6 @@ release_dir="/srv/love/releases/$RELEASE_ID"
 
 # mkdir intentionally fails if this release already exists; do not modify a live release.
 ssh "${ssh_options[@]}" "$target" "mkdir -m 755 -- '$release_dir'"
-tar -C letter-for-you/dist -czf - . |
+tar -C "$PUBLISH_DIRECTORY" -czf - . |
   ssh "${ssh_options[@]}" "$target" "tar -xzf - --no-same-owner --no-same-permissions -C '$release_dir'"
 ssh "${ssh_options[@]}" "$target" "bash -s -- '$RELEASE_ID'" < deploy/activate-release.sh

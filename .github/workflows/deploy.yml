@@ -32,13 +32,22 @@ jobs:
       - name: Check JavaScript
         run: npm --prefix letter-for-you run check
 
-      - name: Run existing tests
-        run: node --test letter-for-you/tests/preload.test.mjs
+      - name: Run automated tests
+        run: node --test letter-for-you/tests/preload.test.mjs deploy/build-site.test.mjs
 
       - name: Check deployment scripts
         run: |
           for script in deploy/*.sh; do bash -n "$script"; done
           bash deploy/test-activate.sh
+
+      - name: Prepare site with certificate settings
+        env:
+          CERTIFICATE_CODE: ${{ secrets.CERTIFICATE_CODE }}
+          CERTIFICATE_PIN: ${{ secrets.CERTIFICATE_PIN }}
+        run: |
+          publish_directory=$(node deploy/build-site.mjs)
+          node --check "$publish_directory/config.js"
+          printf 'PUBLISH_DIRECTORY=%s\n' "$publish_directory" >> "$GITHUB_ENV"
 
       - name: Upload and activate release
         env:
